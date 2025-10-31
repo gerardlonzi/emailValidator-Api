@@ -1,31 +1,48 @@
-/* public/style.css - design épuré pour Bulk Email Validator */
-
-/* Reset & base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html,body { height: 100%; }
+
+
+
+
 body {
   font-family: "Inter", "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
-  background: #f4f6f8;
   color: #222;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  padding: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
-
-/* Container */
-.container {
+.banner{
+  background-image: url("../svgs/liquid-cheese.svg");
+  height: 100vh;
   width: 100%;
-  max-width: 820px;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 8px 30px rgba(18, 38, 63, 0.08);
+  background-size: cover;
+  
+}
+header{
+  padding-block:30px;
+}
+header, header ul{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header ul{
+  gap: 45px;
+  list-style: none;
+}
+header ul a {
+  text-decoration: none;
+  color: black;
+  font-weight:600
+}
+header ul a:hover{
+  color: #009639;
+  transition: .4s ease;
 }
 
-/* Header */
+
+.container{
+  padding-inline: 100px;
+}
 h1 {
   font-size: 20px;
   font-weight: 700;
@@ -34,7 +51,6 @@ h1 {
   margin-bottom: 18px;
 }
 
-/* Alert */
 .alert {
   background: #fff3f2;
   color: #7a1f1f;
@@ -45,7 +61,6 @@ h1 {
   font-weight: 600;
 }
 
-/* Form */
 .form-group { margin-bottom: 16px; }
 label {
   display: block;
@@ -70,7 +85,6 @@ input[type="file"] {
 }
 textarea { min-height: 120px; resize: vertical; }
 
-/* Buttons */
 button, a.btn {
   display: inline-flex;
   align-items: center;
@@ -98,7 +112,6 @@ button[disabled], button.disabled {
   box-shadow: none;
 }
 
-/* Processing indicator */
 .hidden { display: none !important; }
 #processing { margin-top: 12px; color: #334155; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
 .spinner {
@@ -112,7 +125,6 @@ button[disabled], button.disabled {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -135,13 +147,11 @@ tbody td {
   color: #0f1724;
 }
 
-/* Row states */
 tr.valid td { background: #e9f7ef; }
 tr.invalid td { background: #fff1f0; }
 tr.risky td { background: #fffaf0; }
 tr.unknown td { background: #f3f6fb; }
 
-/* Download links area */
 .download-links {
   display: flex;
   flex-wrap: wrap;
@@ -161,7 +171,7 @@ a.btn.back {
   background: #6b7280;
 }
 
-/* Responsive */
+
 @media (max-width: 720px) {
   .container { padding: 18px; }
   table, thead, tbody, th, td, tr { display: block; }
@@ -171,9 +181,8 @@ a.btn.back {
   tbody td::before { content: attr(data-label); font-weight: 700; color: #374151; margin-right: 8px; }
 }
 
-/* Small helpers */
 .small { font-size: 12px; color: #56607a; }
 pre { white-space: pre-wrap; font-size: 12px; background: #fbfcfe; padding: 10px; border-radius: 8px; color: #0f1724; border: 1px solid #eef2f6; overflow: auto; max-height: 220px; }
 
-/* Accessibility focus */
 input:focus, textarea:focus, button:focus, a.btn:focus { outline: 3px solid rgba(11,93,196,0.12); outline-offset: 2px; }
+
