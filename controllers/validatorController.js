@@ -5,6 +5,13 @@ import { parseCsvFile, saveCsv } from '../utils/csvUtils.js';
 import { validateOne } from '../utils/emailValidator.js';
 import { CONFIG } from '../config/env.js';
 
+
+export async function validateEmails(emails) {
+  const CONCURRENCY_LIMIT = 10;
+  const limit = pLimit(CONCURRENCY_LIMIT);
+  const tasks = emails.map(email => limit(() => validateOne(email)));
+  return await Promise.all(tasks);
+}
 export async function handleValidation(req, res) {
   const manualEmails = (req.body.manualEmails || '').split(/\r?\n|,/).map(e => e.trim()).filter(Boolean);
   const file = req.file;

@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { CONFIG } from './config/env.js';
 import validatorRoutes from './routes/validatorRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -10,6 +11,7 @@ app.use(express.static(CONFIG.PUBLIC_DIR));
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', validatorRoutes);
+app.use('/api', apiRoutes);
 app.use('/results', express.static(CONFIG.RESULTS_DIR));
 
 app.listen(CONFIG.PORT, () => {
