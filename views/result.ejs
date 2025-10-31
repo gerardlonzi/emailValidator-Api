@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validation Results</title>
+  <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Validation Results</h1>
+
+    <% if (message) { %>
+      <p class="alert"><%= message %></p>
+      <a href="/">Go back</a>
+    <% } else { %>
+      <div class="download-links">
+        <% if (csvPath) { %>
+          <a class="btn" href="<%= csvPath %>" download>Download All Results CSV</a>
+        <% } %>
+        <% if (validCsvPath) { %>
+          <a class="btn valid" href="<%= validCsvPath %>" download>Download Valid Emails CSV</a>
+        <% } %>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Status</th>
+            <th>SubStatus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% results.forEach(r => { %>
+            <tr class="<%= r.status.toLowerCase() %>">
+              <td><%= r.email %></td>
+              <td><%= r.status %></td>
+              <td><%= r.subStatus %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <a class="btn back" href="/">Validate more emails</a>
+    <% } %>
+  </div>
+</body>
+</html>
