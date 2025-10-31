@@ -1,11 +1,10 @@
 
 import express from 'express';
 import { validateEmails } from '../controllers/validatorController.js';
-import { apiAuth } from '../middlewares/apiAuth.js';
 
 const router = express.Router();
 
-router.post('/validate', apiAuth, async (req, res) => {
+router.post('/validate', async (req, res) => {
   const { emails } = req.body; // attend un tableau ["a@b.com", "c@d.com"]
 
   if (!emails || !Array.isArray(emails) || emails.length === 0) {

@@ -13,6 +13,7 @@ export async function validateEmails(emails) {
   return await Promise.all(tasks);
 }
 export async function handleValidation(req, res) {
+  
   const manualEmails = (req.body.manualEmails || '').split(/\r?\n|,/).map(e => e.trim()).filter(Boolean);
   const file = req.file;
   const fileEmails = file ? await parseCsvFile(file.path) : [];
