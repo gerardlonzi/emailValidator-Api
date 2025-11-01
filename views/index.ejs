@@ -19,23 +19,31 @@
     
           <div class="form-group tv">
             <label for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement (un par ligne ou séparés par une virgule).</label>
-            <textarea name="manualEmails" id="manualEmails" rows="3" placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+            <div>
+              <div class="input-btn-submit-bl">
+                <textarea name="manualEmails" id="manualEmails" rows="1" placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+                <div class="btn-bl">
+                  <button id="validateBtn" type="submit"><i class="bi bi-check-circle"></i><span>Vérifier</span></button>
+                  <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
+                </div>
+              </div>
+                </div>
             <% if (message) { %>
-              <div id="formMessage" class="alert error"><%= message %></div>
+              <div id="formMessage " class="alert error fade-in"><%= message %></div>
             <% } else { %>
-              <div id="formMessage" class="alert hidden"></div>
+              <div id="formMessage" class="alert hidden fade-in"></div>
             <% } %>
           </div>
     
           <div class="form-group input-file">
-            <label for="emailFile"><i style="width: 20px; height: 20px;color: black;" class="bi bi-arrow-bar-up"></i> ou <span>Importer un fichier CSV</span></label>
+            <label for="emailFile"><i  class="bi bi-arrow-bar-up"></i> ou <span>Importer un fichier CSV</span></label>
             <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
-          </div>
-          <div class="btn-bl">
-            <button id="validateBtn" type="submit"><i class="bi bi-check-circle"></i><span>Vérifier</span></button>
-            <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
-          </div>
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
 
+          </div>
+          
         </form>
       </div>
     </div>

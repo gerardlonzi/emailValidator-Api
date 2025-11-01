@@ -31,9 +31,19 @@ form.addEventListener('submit', async function (e) {
   processing.classList.remove('hidden');
 
   }
-
-
-
- 
 });
+const progressBar = document.querySelector('.progress-bar');
+const progress = document.querySelector('.progress');
+
+progressBar.style.display = 'block';
+progress.style.width = '0%';
+
+let percent = 0;
+const interval = setInterval(() => {
+  percent += 10;
+  progress.style.width = percent + '%';
+  if (percent >= 100) {
+    clearInterval(interval);
+  }
+}, 200);
 
