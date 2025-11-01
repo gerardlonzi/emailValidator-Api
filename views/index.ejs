@@ -6,34 +6,40 @@
   <%- include("partiels/navbar") %>
   <main>
     <section class="banner">
+      <div class="container">
+        <div class="intro">
+          <h1><span>Un service de vérification d'e-mails</span><br> de pointe, précis et performant.</h1>
+          <p>Identifiez les e-mails valides grâce à notre technologie de validation en temps réel (99,6% fiable) <br> pour garantir la réception et la lecture de vos messages.</p>
+        </div>
+      <div class="entry-mail-bl">
+        <% if (message) { %>
+          <div id="formMessage" class="alert error"><%= message %></div>
+        <% } else { %>
+          <div id="formMessage" class="alert hidden"></div>
+        <% } %>
+    
+        <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
+    
+          <div class="form-group tv">
+            <label for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement (un par ligne ou séparés par une virgule).</label>
+            <textarea name="manualEmails" id="manualEmails" rows="3" placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+          </div>
+    
+          <div class="form-group">
+            <label for="emailFile">Upload CSV file:</label>
+            <input type="file" name="emailFile" id="emailFile" accept=".csv">
+          </div>
+          <div class="btn-bl">
+            <button id="validateBtn" type="submit">Validate Emails</button>
+            <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
+          </div>
 
+        </form>
+      </div>
+    </div>
     </section>
   </main>
 
-  <div class="container">
-    <h1>Bulk Email Validator</h1>
-
-    <% if (message) { %>
-      <div id="formMessage" class="alert error"><%= message %></div>
-    <% } else { %>
-      <div id="formMessage" class="alert hidden"></div>
-    <% } %>
-
-    <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="emailFile">Upload CSV file:</label>
-        <input type="file" name="emailFile" id="emailFile" accept=".csv">
-      </div>
-
-      <div class="form-group">
-        <label for="manualEmails">Or enter emails manually (one per line or comma separated):</label>
-        <textarea name="manualEmails" id="manualEmails" rows="6" placeholder="example1@gmail.com&#10;example2@yahoo.com"></textarea>
-      </div>
-
-      <button id="validateBtn" type="submit">Validate Emails</button>
-      <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
-    </form>
-  </div>
 
   <% -include("partiels/footer") %>
 

@@ -1,8 +1,0 @@
-email,status,subStatus
-test@gmail.com,invalid,rejected
-example@tempmail.com,valid,smtp_accepted
-invalid@@domain,invalid,syntax_error
-fakeaddress@nonexistingdomainxyz123.com,unknown,network_error
-lonzi.gerard.@gmail.com,invalid,syntax_error
-ge.rardl.onzi@gmail.com,invalid,rejected
-elionor@gmail.com,valid,smtp_accepted
