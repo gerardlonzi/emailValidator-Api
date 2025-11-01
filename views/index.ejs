@@ -1,6 +1,7 @@
 <%- include("partiels/head", {pageTitle : "bulk email validator"})   %>
   <link rel="stylesheet" href="/styles/index.css">
   <script src="/js/inputVerificator.js" defer></script>
+  
 </head>
 <body>
   <%- include("partiels/navbar") %>
@@ -12,25 +13,26 @@
           <p>Identifiez les e-mails valides grâce à notre technologie de validation en temps réel (99,6% fiable) <br> pour garantir la réception et la lecture de vos messages.</p>
         </div>
       <div class="entry-mail-bl">
-        <% if (message) { %>
-          <div id="formMessage" class="alert error"><%= message %></div>
-        <% } else { %>
-          <div id="formMessage" class="alert hidden"></div>
-        <% } %>
+       
     
         <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
     
           <div class="form-group tv">
             <label for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement (un par ligne ou séparés par une virgule).</label>
             <textarea name="manualEmails" id="manualEmails" rows="3" placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+            <% if (message) { %>
+              <div id="formMessage" class="alert error"><%= message %></div>
+            <% } else { %>
+              <div id="formMessage" class="alert hidden"></div>
+            <% } %>
           </div>
     
-          <div class="form-group">
-            <label for="emailFile">Upload CSV file:</label>
-            <input type="file" name="emailFile" id="emailFile" accept=".csv">
+          <div class="form-group input-file">
+            <label for="emailFile"><i style="width: 20px; height: 20px;color: black;" class="bi bi-arrow-bar-up"></i> ou <span>Importer un fichier CSV</span></label>
+            <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
           </div>
           <div class="btn-bl">
-            <button id="validateBtn" type="submit">Validate Emails</button>
+            <button id="validateBtn" type="submit"><i class="bi bi-check-circle"></i><span>Vérifier</span></button>
             <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
           </div>
 
@@ -41,5 +43,5 @@
   </main>
 
 
-  <% -include("partiels/footer") %>
+  <%- include("partiels/footer") %>
 

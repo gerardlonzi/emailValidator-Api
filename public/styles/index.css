@@ -20,7 +20,7 @@ body {
 }
 .banner{
   background-image: url("../svgs/liquid-cheese.svg");
-  height: 100vh;
+  height: 120vh;
   width: 100%;
   background-size: cover;
   background-color: var(--bg-loader);
@@ -40,6 +40,7 @@ header, header ul{
 header ul{
   gap: 45px;
   list-style: none;
+  margin-bottom: 0;
 }
 header ul a {
   text-decoration: none;
@@ -66,6 +67,7 @@ header ul a:hover{
 .banner .intro h1{
   font-size: 51px;
   line-height: 65px;
+  font-weight: bold;
   color:var(--white-text) ;
 }
 .banner .intro h1 span{
@@ -78,7 +80,7 @@ header ul a:hover{
   flex-direction: column;
 }
 .form-group.tv{
-  margin-top: 65px;
+  margin-top: 50px;
   width: 77%;
   background-color: white;
   border-radius: 25px;
@@ -96,7 +98,7 @@ header ul a:hover{
 }
 .form-group.tv textarea{
   width: 100%;
-  margin-top: 18px;
+  margin-top: 19px;
   border-radius: 10px;
 resize: none;
 padding: 20px;
@@ -104,7 +106,19 @@ font-size: 20px;
 line-height: 30px;
 background-color: rgb(247, 247, 247);
 }
+.form-group.input-file label{
+  margin-top: 30px;
+  color: var(--quatro-color);
+  font-weight: 600;
+}
+.form-group.input-file label span{
+  display: inline-block;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--tercero-color);
+  padding-left: 7px;
+}
 .alert {
+  font-size: 14px;
   background: #fff3f2;
   color: #7a1f1f;
   border-radius: 8px;

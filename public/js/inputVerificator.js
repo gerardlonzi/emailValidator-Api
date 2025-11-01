@@ -16,7 +16,7 @@ form.addEventListener('submit', async function (e) {
 
   if (!fileSelected && !manualText) {
     e.preventDefault();
-    messageBox.textContent = "⚠️ Please upload a CSV file or enter at least one email address.";
+    messageBox.textContent = "⚠️ Veuillez importer un fichier CSV ou renseigner au moins une adresse e-mail.";
     messageBox.classList.remove("hidden");
     messageBox.classList.add("error");
     return;
