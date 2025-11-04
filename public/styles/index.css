@@ -39,7 +39,7 @@ header {
 }
 
 header.scrolled {
-  backdrop-filter: blur(10px);  
+  backdrop-filter: blur(5px);  
   background-color: rgba(255, 255, 255, 0.9); 
 }
 header, header ul{
@@ -140,10 +140,12 @@ background-color: rgb(247, 247, 247);
   font-size: 20px;
   background-color: var(--secondary-color);
   color: black;
+  font-weight: 600;
   border: none;
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
   box-shadow: 0px 0px 2px var(--secondary-color);
+  font-family: "poppins",  sans-serif;
 }
 .btn-bl #validateBtn:hover{
   background-color: var(--hover-green);
@@ -243,7 +245,60 @@ color: white;
   animation: fadeIn 800ms ease forwards; 
 }
 
+
+  .client-compagnies {
+    padding: 20px 0;
+    background: white;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .client-compagnies h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  .client-compagnies .logos {
+    display: flex;
+    align-items: center;
+    animation: scroll 20s linear infinite;
+    width: calc(200px * 10); /* largeur = largeur logo * nombre total */
+  }
+
+  .client-compagnies .logo {
+    flex: 0 0 200px; /* largeur de chaque logo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .client-compagnies .logo img {
+    width: 70px;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+  }
+
+  .client-compagnies .logo img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .client-compagnies   .logos-track {
+    display: flex;
+    width: max-content;
+  }
 /* animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
