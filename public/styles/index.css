@@ -8,7 +8,7 @@ html,body { height: 100%; }
 --hover-green: rgb(0, 192, 32);
 --tercero-color: rgb(176, 176, 176);
 --quatro-color: rgb(234, 234, 234);
---bg-loader : rgb(183, 255, 188);
+--bg-loader : rgb(0, 10, 95);
 --white-text :rgb(243, 243, 243) ;
 --green-text : #80ff87;
 
@@ -27,8 +27,20 @@ body {
   background-color: var(--bg-loader);
   
 }
-header{
-  padding-block:30px;
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-block: 20px;
+  background-color: rgb(255, 255, 255);
+  transition: backdrop-filter 0.3s, background-color 0.3s;
+  z-index: 1000;
+}
+
+header.scrolled {
+  backdrop-filter: blur(10px);  
+  background-color: rgba(255, 255, 255, 0.9); 
 }
 header, header ul{
   display: flex;
@@ -52,7 +64,9 @@ header ul a:hover{
   color: var(--secondary-color);
   transition: .4s ease;
 }
-
+.banner{
+  padding-top: 80px;
+}
 
 .container{
   padding-inline: 100px;
@@ -136,24 +150,25 @@ background-color: rgb(247, 247, 247);
   color: white;
   transition: .4s ease;
 }
+.form-group.input-file{
+  color: white;
+  font-weight: 600;
+}
+.form-group.input-file a{
+  display: inline-flex;
 
+  text-decoration: none;
+  padding: 8px ;
+  border-bottom: 1px solid var(--secondary-color);
+  padding-left: 10px;
+  color: var(--secondary-color);
+  transition:  transform 0.2s ease;
+
+}
 .form-group.input-file label{
-  display: flex;
-  align-items: center;
-  gap: 5px;
   margin-top: 30px;
   color: var(--quatro-color);
   font-weight: 600;
-}
-.form-group.input-file label i{
-  color: var(--quatro-color);
-  font-size: 22px;
-}
-.form-group.input-file label span{
-  display: inline-block;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--tercero-color);
-  padding-left: 7px;
 }
 .alert {
   position: absolute;
@@ -165,34 +180,78 @@ background-color: rgb(247, 247, 247);
   font-weight: 600;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 6px;
-  background: #ddd;
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 10px;
+.input-file label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  padding: 8px ;
+  margin-right: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition:  transform 0.2s ease;
+  border-bottom: 1px solid var(--quatro-color);
+}
+
+.input-file label:hover,.form-group.input-file a:hover{
+  transform: translateY(-2px);
+}
+
+.upload-animation {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
   display: none;
+  justify-content: center;
+  align-items: center;
 }
 
-.progress {
-  width: 0;
-  height: 100%;
-  background: #00ba4b;
-  transition: width 0.3s ease;
+.circle-loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 5px solid transparent;
+  border-top-color: #00ba4b;
+  border-right-color: #001A5A;
+  animation: spin 1s linear infinite;
+}
+
+.checkmark {
+  position: absolute;
+  font-size: 1.8rem;
+  color: #00ba4b;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 
-/* animationa */
+.upload-message {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+color: white;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+
 .fade-in {
   opacity: 0;
-  animation: fadeIn 800ms ease forwards; /* durée : 800ms */
+  animation: fadeIn 800ms ease forwards; 
 }
 
+/* animation */
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* .form-group { margin-bottom: 16px; }
