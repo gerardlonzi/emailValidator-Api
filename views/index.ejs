@@ -1,47 +1,139 @@
-<%- include("partiels/head", {pageTitle : "bulk email validator"})   %>
+<%- include("partiels/head", {pageTitle : "bulk email validator" }) %>
   <link rel="stylesheet" href="/styles/index.css">
   <script src="/js/inputVerificator.js" defer></script>
-  
-</head>
-<body>
-  <%- include("partiels/navbar") %>
-  <main>
-    <section class="banner">
-      <div class="container">
-        <div class="intro">
-          <h1><span>Un service de vérification d'e-mails</span><br> de pointe, précis et performant.</h1>
-          <p>Identifiez les e-mails valides grâce à notre technologie de validation en temps réel (99,6% fiable) <br> pour garantir la réception et la lecture de vos messages.</p>
-        </div>
-      <div class="entry-mail-bl">
-       
-    
-        <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
-    
-          <div class="form-group tv">
-            <label for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement (un par ligne ou séparés par une virgule).</label>
-            <textarea name="manualEmails" id="manualEmails" rows="3" placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
-            <% if (message) { %>
-              <div id="formMessage" class="alert error"><%= message %></div>
-            <% } else { %>
-              <div id="formMessage" class="alert hidden"></div>
-            <% } %>
+
+  </head>
+
+  <body>
+    <%- include("partiels/navbar") %>
+      <main>
+        <section class="banner">
+          <div class="container">
+            <div class="intro">
+              <h1><span>Un service de vérification d'e-mails</span><br> de pointe, précis et performant.</h1>
+              <p>Identifiez les e-mails valides grâce à notre technologie de validation en temps réel (99,6% fiable)
+                <br> pour garantir la réception et la lecture de vos messages.</p>
+            </div>
+            <div class="entry-mail-bl">
+
+
+              <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group tv">
+                  <label for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement (un par ligne ou séparés par
+                    une virgule).</label>
+                  <div>
+                    <div class="input-btn-submit-bl">
+                      <textarea name="manualEmails" id="manualEmails" rows="1"
+                        placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+                      <div class="btn-bl">
+                        <button id="validateBtn" type="submit"><i
+                            class="bi bi-check-circle"></i><span>Vérifier</span></button>
+                        <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
+                      </div>
+                    </div>
+                  </div>
+                  <% if (message) { %>
+                    <div id="formMessage " class="alert error fade-in">
+                      <%= message %>
+                    </div>
+                    <% } else { %>
+                      <div id="formMessage" class="alert hidden fade-in"></div>
+                      <% } %>
+                </div>
+
+                <div class="form-group input-file">
+                  <label for="emailFile" id="uploadLabel">
+                    <i class="bi bi-arrow-bar-up"></i>
+                    <span>Importer un fichier CSV </span>
+                  </label>
+                  ou
+                  <a href="">creer un mon fichier csv</a>
+                  <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
+                </div>
+
+                <div class="upload-animation" id="uploadAnimation">
+                  <div class="circle-loader"></div>
+                  <div class="checkmark">✔</div>
+                </div>
+
+                <p id="fileNameDisplay" class="file-name-display"
+                  style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
+
+                <p class="upload-message" id="uploadMessage"></p>
+
+
+              </form>
+            </div>
           </div>
-    
-          <div class="form-group input-file">
-            <label for="emailFile"><i style="width: 20px; height: 20px;color: black;" class="bi bi-arrow-bar-up"></i> ou <span>Importer un fichier CSV</span></label>
-            <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
+        </section>
+        
+        <section class="client-compagnies container">
+          <h2>  Fiable. Rapide. Choisi par 10 000+ clients.</h2>
+          <div class="slider">
+            <div class="slide-track">
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" />
+              </div>
+              <div class="slide">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" />
+              </div>
+            </div>
           </div>
-          <div class="btn-bl">
-            <button id="validateBtn" type="submit"><i class="bi bi-check-circle"></i><span>Vérifier</span></button>
-            <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
-          </div>
+        </section>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore maxime ipsa possimus itaque tempore voluptatem tenetur dignissimos mollitia, sunt alias error facilis suscipit temporibus, debitis corrupti, ex esse accusantium magnam!
+        Porro ut odit voluptate sunt nostrum nam deleniti maiores repellendus repudiandae assumenda voluptatibus accusamus dolorum quidem officiis labore, a atque itaque, dolore distinctio quia! Eveniet provident similique voluptatem mollitia quisquam.
+        Et facilis officia aliquid dolor dolore quibusdam quis, itaque assumenda at nam accusantium laudantium animi. Ab nam nemo placeat corrupti repellat aliquid cumque, reiciendis, debitis, quam natus eius quod neque?
+        Ex et voluptate veritatis nemo quo culpa officiis earum. Quos, dolores. Praesentium alias incidunt quia minima ducimus adipisci quas ad quaerat laudantium, illo maiores unde eveniet, qui, velit officiis exercitationem.
+        Officiis error adipisci qui delectus quidem a blanditiis corrupti quae minima nisi suscipit harum, repellendus eligendi. Optio quisquam eos in eligendi doloribus quam ex tempora, voluptatibus iste temporibus rem ratione!
+        Labore obcaecati sapiente dolore dicta. Exercitationem culpa cumque nostrum distinctio! Officiis autem sequi sapiente delectus culpa pariatur eligendi temporibus voluptas, odio quam explicabo distinctio, accusamus aut ipsa deserunt, veritatis deleniti!
+        Ipsa iure suscipit nobis. Saepe nobis ratione amet perferendis officiis sed, quaerat quae voluptatem debitis, molestiae nostrum quibusdam enim inventore accusantium quisquam, eveniet obcaecati reiciendis a facilis nemo sapiente corporis!
+        Ad labore quos nisi voluptatum quas vero! Eaque hic natus earum quibusdam sit quo id omnis quisquam. Ab placeat magnam ipsum harum quisquam vel illo facilis. Nobis ad ipsa quos!
+        Doloribus facilis aspernatur ipsam, itaque fugiat molestias nam. Tenetur esse culpa ut ab tempora dolorum perferendis consectetur sunt officiis, ipsa dignissimos, vitae est quis illum! Totam, labore! Voluptates, maiores minima.
+        Maxime laudantium illum qui tempora, placeat, est debitis dolore fugit laborum optio neque ipsa iusto dolor? Aliquid, voluptates nobis perferendis alias, est consectetur assumenda atque amet, ipsum dolor asperiores deserunt?
+        Voluptatibus, autem ab? Doloribus necessitatibus tempora quo dicta similique aliquid explicabo consequatur magni voluptate optio! Eum corrupti iusto sapiente eos magnam explicabo nostrum quasi soluta pariatur minus, accusantium alias eaque?
+        Quidem odio blanditiis numquam, accusamus maiores molestiae iste dolorem sit dolorum hic laboriosam sunt aut fuga praesentium exercitationem at, voluptates consequatur officia maxime qui porro est ipsam. Nisi, harum repellat.
+        Quam debitis laboriosam iusto perspiciatis reiciendis libero necessitatibus, recusandae vitae! Eaque dicta quis fuga laboriosam beatae, nam nostrum est consequatur rem atque exercitationem commodi vero adipisci quibusdam ipsam ad delectus?
+        Earum suscipit corrupti facilis repellendus voluptatibus. Reprehenderit tempora enim eaque temporibus suscipit, nihil maiores quis animi nesciunt, quibusdam cum? Quam quas explicabo aliquam voluptas consequuntur molestiae! Consequuntur laudantium odit adipisci!
+        Commodi non eligendi omnis nulla voluptates voluptatem repudiandae rem dolorum corporis officiis facere odit consequuntur maiores, quis laboriosam nostrum quaerat, debitis voluptatibus voluptate repellendus? Aspernatur maxime quis sapiente tenetur dignissimos.
 
-        </form>
-      </div>
-    </div>
-    </section>
-  </main>
+      </main>
 
 
-  <%- include("partiels/footer") %>
-
+      <%- include("partiels/footer") %>
