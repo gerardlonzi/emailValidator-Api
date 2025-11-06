@@ -1,6 +1,7 @@
 email,status,subStatus
+gerardlonzi09@gmail.com,unknown,network_error
 test@gmail.com,unknown,network_error
-example@tempmail.com,unknown,network_error
+example@tempmail,invalid,syntax_error
 invalid@@domain,invalid,syntax_error
 fakeaddress@nonexistingdomainxyz123.com,unknown,network_error
 lonzi.gerard.@gmail.com,invalid,syntax_error
