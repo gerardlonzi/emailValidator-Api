@@ -26,7 +26,7 @@ export async function handleValidation(req, res) {
   const limit = pLimit(CONFIG.CONCURRENCY_LIMIT);
   const results = await Promise.all(allEmails.map(email => limit(() => validateOne(email))));
 
-  const validEmails = results.filter(r => r.status === 'valid').map(r => ({ email: r.email }));
+  const validEmails = results.filter(r => r.emailStatus === 'valid').map(r => ({ email: r.email }));
 
   if (file) fs.unlinkSync(file.path);
   const timestamp = Date.now();

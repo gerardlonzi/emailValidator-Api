@@ -1,42 +1,111 @@
 <%- include("partiels/head",{pageTitle : "results"}) %>
 
   <link rel="stylesheet" href="/styles/index.css">
+  <script src="/js/inputVerificator.js" defer></script>
+
 </head>
 <body>
-  <div class="container">
-    <h1>Validation Results</h1>
+  <%- include("partiels/navbar") %>
 
-    <% if (message) { %>
-      <p class="alert"><%= message %></p>
-      <a href="/">Go back</a>
-    <% } else { %>
-      <div class="download-links">
-        <% if (csvPath) { %>
-          <a class="btn" href="<%= csvPath %>" download>Download All Results CSV</a>
-        <% } %>
-        <% if (validCsvPath) { %>
-          <a class="btn valid" href="<%= validCsvPath %>" download>Download Valid Emails CSV</a>
-        <% } %>
+  <section class="form-result container">
+    <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <label class="typemail" for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement <br> (un par ligne ou séparés par
+          une virgule).</label>
+        <div>
+          <div class="input-btn-submit-bl">
+            <textarea name="manualEmails" id="manualEmails" rows="1"
+              placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+            <div class="btn-bl">
+              <button id="validateBtn" type="submit"><i
+                  class="bi bi-check-circle"></i><span>Vérifier</span></button>
+              <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
+            </div>
+          </div>
+        </div>
+        <% if (message !== null &&  typeof message !== 'undefined') { %>
+          <div id="formMessage " class="alert error fade-in">
+            <%= message %>
+          </div>
+          <% } else { %>
+            <div id="formMessage" class="alert hidden fade-in"></div>
+            <% } %>
       </div>
+
+      <div class="form-group input-file">
+        <label for="emailFile" id="uploadLabel">
+          <i class="bi bi-arrow-bar-up"></i>
+          <span>Importer un fichier CSV </span>
+        </label>
+        ou
+        <a href="">creer un mon fichier csv</a>
+        <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
+      </div>
+
+      <div class="upload-animation" id="uploadAnimation">
+        <div class="circle-loader"></div>
+        <div class="checkmark">✔</div>
+      </div>
+
+      <p id="fileNameDisplay" class="file-name-display"
+        style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
+
+      <p class="upload-message" id="uploadMessage"></p>
+
+
+    </form>
+  </section>
+  <section class="tab-results">
+
+    <div class="container">
+      <h2>Validation Results</h2>
       <table>
         <thead>
           <tr>
             <th>Email</th>
-            <th>Status</th>
-            <th>SubStatus</th>
+            <th>Format</th>
+            <th>Type</th>
+            <th>serverType</th>
+            <th>EmailStatus</th>
+            <th>Score</th>
+            <th>substatus</th>
           </tr>
         </thead>
         <tbody>
-          <% results.forEach(r => { %>
-            <tr class="<%= r.status.toLowerCase() %>">
-              <td><%= r.email %></td>
-              <td><%= r.status %></td>
-              <td><%= r.subStatus %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <a class="btn back" href="/">Validate more emails</a>
-    <% } %>
-  </div>
-  <% -include("partiels/footer") %>
+      <% if (message !== null &&  typeof message !== 'undefined') { %>
+        <p class="alert"><%= message %></p>  
+        <a href="/">Go back</a>
+      <% } else { %>
+        <div class="download-links">
+          <% if (csvPath !== 'undefined' && csvPath !==null) { %>
+            <a class="btn" href="<%= csvPath %>" download>Download All Results CSV</a>
+          <% } %>
+          <% if (validCsvPath !=='undefined' && validCsvPath !==null) { %>
+            <a class="btn valid" href="<%= validCsvPath %>" download>Download Valid Emails CSV</a>
+          <% } %>
+        </div>
+        <% if (results) { %>
+            <% results.forEach(r => { %>
+              <tr>
+                <td><%= r.email %></td>
+                <td><%= r.format %></td>
+                <td><%= r.type %></td>
+                <td><%= r.serverType %></td>
+                <td><%= r.emailStatus %></td>
+                <td><%= r.score %></td>
+                <td><%= r.subStatus %></td>
+              </tr>
+              <% }) %>
+              <% } else { %>
+                Pas d'adresse email valider
+                <% } %>
+
+          </tbody>
+        </table>
+
+        <a class="btn back" href="/" style="display: inline-block; margin-top: 40px;">Validate more emails</a>
+      <% } %>
+    </div>
+  </section>
+  <%- include("partiels/footer") %>
