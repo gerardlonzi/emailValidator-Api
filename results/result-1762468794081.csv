@@ -1,8 +1,0 @@
-email,format,type,serverType,emailStatus,score,subStatus
-test@gmail.com,unknown,webmail,temporary,unknown,50,temporary
-example@tempmail,invalid,unknown,unknown,invalid,10,invalid_syntax
-invalid@@domain,invalid,unknown,unknown,invalid,10,invalid_syntax
-fakeaddress@nonexistingdomainxyz123.com,unknown,custom,unknown,unknown,50,network_error
-lonzi.gerard.@gmail.com,invalid,unknown,unknown,invalid,10,invalid_syntax
-ge.rardl.onzi@gmail.com,invalid,webmail,rejected,invalid,10,smtp_rejected
-elionor@gmail.com,valid,webmail,smtp_accepted,valid,100,smtp_accepted

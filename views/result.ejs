@@ -1,111 +1,271 @@
-<%- include("partiels/head",{pageTitle : "results"}) %>
+<%- include("partiels/head",{pageTitle : "results" }) %>
 
   <link rel="stylesheet" href="/styles/index.css">
   <script src="/js/inputVerificator.js" defer></script>
+  <script src="/js/result.js" defer></script>
 
-</head>
-<body>
-  <%- include("partiels/navbar") %>
+  </head>
 
-  <section class="form-result container">
-    <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
+  <body>
+    <%- include("partiels/navbar") %>
 
-      <div class="form-group">
-        <label class="typemail" for="manualEmails"> Saisissez un ou plusieurs e-mails manuellement <br> (un par ligne ou séparés par
-          une virgule).</label>
-        <div>
-          <div class="input-btn-submit-bl">
-            <textarea name="manualEmails" id="manualEmails" rows="1"
-              placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
-            <div class="btn-bl">
-              <button id="validateBtn" type="submit"><i
-                  class="bi bi-check-circle"></i><span>Vérifier</span></button>
-              <div id="processing" class="hidden"><span class="spinner"></span> Processing...</div>
+      <section class="form-result container">
+        <img class="ooorganize" src="/svgs/ooorganize.svg" alt="">
+        <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label class="typemail" for="manualEmails">Saisissez un ou plusieurs e-mails manuellement <br>(un par ligne
+              ou séparés par une virgule).</label>
+            <div class="input-btn-submit-bl">
+              <textarea name="manualEmails" id="manualEmails" rows="2"
+                placeholder="example1@gmail.com , example2@yahoo.com"></textarea>
+              <div class="btn-bl">
+                <button id="validateBtn" type="submit">
+                  <i class="bi bi-check-circle"></i><span>Vérifier</span>
+                </button>
+              </div>
+            </div>
+
+            <% if (message) { %>
+              <div id="formMessage" class="alert error fade-in">
+                <%= message %>
+              </div>
+              <% } else { %>
+                <div id="formMessage" class="alert hidden fade-in"></div>
+                <% } %>
+          </div>
+
+          <div class="form-group input-file">
+            <label for="emailFile" id="uploadLabel">
+              <i class="bi bi-arrow-bar-up"></i>
+              <span>Importer un fichier CSV </span>
+            </label>
+            ou
+            <a href="#">Créer mon fichier CSV</a>
+            <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
+          </div>
+          <div class="upload-animation" id="uploadAnimation">
+            <div class="circle-loader"></div>
+            <div class="checkmark">✔</div>
+          </div>
+
+          <p id="fileNameDisplay" class="file-name-display"
+            style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
+
+          <p class="upload-message" id="uploadMessage"></p>
+
+        </form>
+      </section>
+
+      <section class="tab-results">
+        <div class="container">
+
+          <div class="download-links">
+            <h2>Validation Results</h2>
+
+            <div>
+              <% if (csvPath) { %>
+                <a class="btn" href="<%= csvPath %>" download><i style="margin-right: 5px;" class="bi bi-download"></i>
+                  Télécharger tous les résultats CSV</a>
+                <% } %>
+                  <% if (validCsvPath) { %>
+                    <a class="btn valid" href="<%= validCsvPath %>" download> <i style="margin-right: 5px;"
+                        class="bi bi-download"></i> Télécharger les emails valides</a>
+                    <% } %>
             </div>
           </div>
-        </div>
-        <% if (message !== null &&  typeof message !== 'undefined') { %>
-          <div id="formMessage " class="alert error fade-in">
-            <%= message %>
-          </div>
-          <% } else { %>
-            <div id="formMessage" class="alert hidden fade-in"></div>
-            <% } %>
-      </div>
 
-      <div class="form-group input-file">
-        <label for="emailFile" id="uploadLabel">
-          <i class="bi bi-arrow-bar-up"></i>
-          <span>Importer un fichier CSV </span>
-        </label>
-        ou
-        <a href="">creer un mon fichier csv</a>
-        <input hidden type="file" name="emailFile" id="emailFile" accept=".csv">
-      </div>
-
-      <div class="upload-animation" id="uploadAnimation">
-        <div class="circle-loader"></div>
-        <div class="checkmark">✔</div>
-      </div>
-
-      <p id="fileNameDisplay" class="file-name-display"
-        style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
-
-      <p class="upload-message" id="uploadMessage"></p>
-
-
-    </form>
-  </section>
-  <section class="tab-results">
-
-    <div class="container">
-      <h2>Validation Results</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Format</th>
-            <th>Type</th>
-            <th>serverType</th>
-            <th>EmailStatus</th>
-            <th>Score</th>
-            <th>substatus</th>
-          </tr>
-        </thead>
-        <tbody>
-      <% if (message !== null &&  typeof message !== 'undefined') { %>
-        <p class="alert"><%= message %></p>  
-        <a href="/">Go back</a>
-      <% } else { %>
-        <div class="download-links">
-          <% if (csvPath !== 'undefined' && csvPath !==null) { %>
-            <a class="btn" href="<%= csvPath %>" download>Download All Results CSV</a>
-          <% } %>
-          <% if (validCsvPath !=='undefined' && validCsvPath !==null) { %>
-            <a class="btn valid" href="<%= validCsvPath %>" download>Download Valid Emails CSV</a>
-          <% } %>
-        </div>
-        <% if (results) { %>
-            <% results.forEach(r => { %>
+          <table id="resultsTable">
+            <thead>
               <tr>
-                <td><%= r.email %></td>
-                <td><%= r.format %></td>
-                <td><%= r.type %></td>
-                <td><%= r.serverType %></td>
-                <td><%= r.emailStatus %></td>
-                <td><%= r.score %></td>
-                <td><%= r.subStatus %></td>
+                <th>Email</th>
+                <th>Format</th>
+                <th>Type</th>
+                <th>Serveur Status</th>
+                <th>Email Status</th>
+                <th>Score</th>
+                <th>Substatus</th>
               </tr>
-              <% }) %>
-              <% } else { %>
-                Pas d'adresse email valider
-                <% } %>
+            </thead>
+            <tbody>
+              <% if (!results || results.length===0) { %>
+                <tr>
+                  <td colspan="7" class="empty-message"><i class="bi bi-box-seam " style="font-size: 24px; margin-left: 10px;"></i> Aucun email validé pour le moment.</td>
+                </tr>
+                <% } else { %>
+                  <% results.forEach((r, index)=> { %>
+                    <tr class="clickable-row" data-index="<%= index %>">
+                      <td>
+                        <%= r.email %> <i style="margin-left: 10px;">(cliquer pour plus de details)</i>
+                      </td>
+                      <td class="status <%= r.format %>">
+                        <%= r.format %>
+                      </td>
+                      <td class="status <%= r.type %>">
+                        <%= r.type %>
+                      </td>
+                      <td class="status <%= r.serverType %>">
+                        <%= r.serverType %>
+                      </td>
+                      <td class="status <%= r.emailStatus %>">
+                        <%= r.emailStatus %>
+                      </td>
+                      <td class="status <%= r.score > 50 ? 'goodScore':'badScore'   %>">
+                        <%= r.score %>
+                      </td>
+                      <td class="status <%= r.subStatus %>">
+                        <%= r.subStatus %>
+                      </td>
+                    </tr>
+                    <tr class="dropdown-row" id="dropdown-<%= index %>">
+                      <td colspan="7">
+                        <div>
+                          <div>
+                            <div>
+                              <i class="bi bi-shield-fill-exclamation"></i>
+                              <i class="bi bi-shield-fill-x"></i> 
+                              <i class="bi bi-shield-fill-check"></i>              
+                            </div>
+                            <div>
+                              <p class="mail">
+                                <%= r.email %>
+                              </p>
+                              <p>
+                                <%= r.emailStatus==='valid' ? "cette adresse email est utilisé pour recevoir des mails"
+                                  :"cette adresse email n'est utiliser pour recevoir des mails" %>
+                              </p>
 
-          </tbody>
-        </table>
+                            </div>
+                          </div>
+                          <div class="details-container">
+                            <!-- FORMAT -->
+                            <div class="detail-item">
+                              <p>Format :
+                                <span class="status <%= r.format %>"><%= r.format %></span>
+                              </p>
+                              <p>
+                                <% if (r.format === 'valid') { %>
+                                  Cette adresse email a un format valide conforme aux standards (ex: nom@domaine.com).
+                                <% } else if (r.format === 'invalid') { %>
+                                  Le format de cette adresse email est invalide. Elle ne suit pas la structure correcte.
+                                <% } else if (r.format === 'unknown') { %>
+                                  Le format de cette adresse n'a pas pu être déterminé.
+                                <% } else { %>
+                                  Format non reconnu.
+                                <% } %>
+                              </p>
+                            </div>
+                          
+                            <!-- TYPE -->
+                            <div class="detail-item">
+                              <p>Type :
+                                <span class="status <%= r.type %>"><%= r.type %></span>
+                              </p>
+                              <p>
+                                <% if (r.type === 'webmail') { %>
+                                  Il s'agit d'une adresse de messagerie personnelle (ex: Gmail, Yahoo, Outlook...).
+                                <% } else if (r.type === 'corporate') { %>
+                                  C'est une adresse professionnelle associée à un nom de domaine d'entreprise.
+                                <% } else if (r.type === 'disposable') { %>
+                                  C'est une adresse jetable utilisée temporairement (souvent pour éviter le spam).
+                                <% } else if (r.type === 'role') { %>
+                                  Cette adresse est générique (ex: info@, contact@, support@) et souvent partagée.
+                                <% } else if (r.type === 'unknown') { %>
+                                  Le type de cette adresse email n'a pas pu être identifié.
+                                <% } else { %>
+                                  Type d'adresse non spécifié.
+                                <% } %>
+                              </p>
+                            </div>
+                          
+                            <!-- SERVER -->
+                            <div class="detail-item">
+                              <p>Serveur :
+                                <span class="status <%= r.serverType %>"><%= r.serverType || 'inconnu' %></span>
+                              </p>
+                              <p>
+                                <% if (r.serverType === 'gmail') { %>
+                                  Serveur Gmail détecté — fiable et souvent bien configuré.
+                                <% } else if (r.serverType === 'microsoft') { %>
+                                  Serveur Microsoft (Outlook, Hotmail, Office 365).
+                                <% } else if (r.serverType === 'yahoo') { %>
+                                  Serveur Yahoo Mail détecté.
+                                <% } else if (r.serverType === 'custom') { %>
+                                  Serveur personnalisé — souvent utilisé par les entreprises.
+                                <% } else if (r.serverType === 'unknown' || !r.serverType) { %>
+                                  Impossible d’identifier le serveur de messagerie.
+                                <% } else { %>
+                                  Serveur non reconnu.
+                                <% } %>
+                              </p>
+                            </div>
+                          
+                            <!-- EMAIL STATUS -->
+                            <div class="detail-item">
+                              <p>Statut :
+                                <span class="status <%= r.emailStatus %>"><%= r.emailStatus %></span>
+                              </p>
+                              
+                            </div>
+                          
+                            <!-- SCORE -->
+                            <div class="detail-item">
+                              <p>Score :
+                                <span class="status <%= r.score > 70 ? 'goodScore' : r.score > 40 ? 'mediumScore' : 'badScore' %>">
+                                  <%= r.score %>
+                                </span>
+                              </p>
+                              <p>
+                                <% if (r.score > 70) { %>
+                                  Excellent score de fiabilité — adresse très sûre.
+                                <% } else if (r.score > 40) { %>
+                                  Score moyen — cette adresse peut être risquée.
+                                <% } else { %>
+                                  Faible score — cette adresse semble invalide ou inactive.
+                                <% } %>
+                              </p>
+                            </div>
+                          
+                            <!-- SUBSTATUS -->
+                            <div class="detail-item">
+                              <p>Sous-statut :
+                                <span class="status <%= r.subStatus %>"><%= r.subStatus || 'aucun' %></span>
+                              </p>
+                              <p>
+                                <% if (r.subStatus === 'mailbox_full') { %>
+                                  La boîte de réception est pleine, les messages risquent d’être rejetés.
+                                <% } else if (r.subStatus === 'role_based') { %>
+                                  Adresse partagée par plusieurs utilisateurs (souvent pour le support).
+                                <% } else if (r.subStatus === 'disposable') { %>
+                                  Adresse temporaire détectée.
+                                <% } else if (r.subStatus === 'unknown') { %>
+                                  Le sous-statut n’a pas pu être déterminé.
+                                <% } else { %>
+                                  Aucun sous-statut particulier détecté.
+                                <% } %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        📧 <b>Email :</b> <br>
+                        ⚙️ <b>Serveur :</b>
+                        <%= r.serverType || 'Non spécifié' %><br>
+                          🔍 <b>Statut :</b>
+                          <%= r.emailStatus || 'Inconnu' %><br>
+                            💡 <b>Score :</b>
+                            <%= r.score || 'N/A' %><br>
+                              🧩 <b>Sous-statut :</b>
+                              <%= r.subStatus || 'Aucun' %><br>
+                                🕓 <b>Date de vérification :</b>
+                                <%= new Date().toLocaleString() %>
+                      </td>
+                    </tr>
+                    <% }) %>
+                      <% } %>
+            </tbody>
+          </table>
 
-        <a class="btn back" href="/" style="display: inline-block; margin-top: 40px;">Validate more emails</a>
-      <% } %>
-    </div>
-  </section>
-  <%- include("partiels/footer") %>
+          <a class="btn back" href="/">Valider plus d'emails</a>
+        </div>
+      </section>
+
+      <%- include("partiels/footer") %>
