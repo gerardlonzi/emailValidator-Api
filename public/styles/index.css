@@ -19,6 +19,7 @@ body {
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  scroll-behavior: smooth;
 }
 .banner{
   background-image: url("../svgs/liquid-cheese.svg");
@@ -580,7 +581,7 @@ justify-content: space-between;
 
 .footer-container {
   display: flex;
-  gap: 40px;
+  gap: 80px;
   margin: auto;
 }
 
@@ -605,6 +606,7 @@ justify-content: space-between;
   color: #ccc;
   text-decoration: none;
   transition: color 0.3s;
+  font-size: 13px;
 }
 
 .footer-links a:hover, .footer-shop a:hover {
@@ -862,19 +864,25 @@ tbody td {
 }
 a.btn {
   text-decoration: none;
-  background: #0ea5e9;
-  color: #fff;
   padding: 10px 14px;
   border-radius: 10px;
   text-decoration: none;
+  color: rgb(0, 0, 0);
+  border: 1px solid var(--primary-color);
+
+
 
 }
 a.btn.valid {
   background: #16a34a;
   margin-left: 10px;
+  color: white;
 }
 a.btn.back {
-  background: #6b7280;
+  color:white;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+
 }
 
 tr:hover {
@@ -884,7 +892,7 @@ tr:hover {
 
 .dropdown-row {
   display: none;
-  background: #f9fafb;
+  background: #fcfffe;
   font-size: 0.95rem;
   transition: all 0.4s ease-in-out;
 }
@@ -907,6 +915,9 @@ tr:hover {
   opacity: 1;
   transform: translateY(0);
 }
+.dropdown-row div{
+  padding: 10px;
+}
 
 @keyframes dropdownSlide {
   from {
@@ -921,15 +932,15 @@ tr:hover {
 
 /* --- Status color coding --- */
 .status {
-  font-weight: 600;
   text-transform: capitalize;
+  padding: 6px;
+  font-size: 14px;
 }
 
 /* Format & Status colors */
-.valid,.smtp_accepted,.goodScore { background: #00ff2227;  }
-.invalid,.rejected,.badScore { background: #f4000024; }
-.risky,.disposable,.catch_all { background: #fcca001d; color: #1e1e1e; }
-.unknown,.no_mx, .network_error, .smtp_check_failed, .error { background: #0055ff22;  }
+.valid,.smtp_accepted,.goodScore { background: #00ff2209; color: #00ab25;  }
+.invalid,.rejected,.badScore,.invalid_syntax,.network_error { background: #ff000007; color: rgb(193, 0, 0); }
+.risky,.disposable,.catch_all,.unknown,.no_mx, .smtp_check_failed, .error:not(.alert),.temporary{ background: #fcca0009; color: #e8a600; }
 
 
 /* Score style */
@@ -948,7 +959,7 @@ tr:hover {
 }
 
 .clickable-row:hover {
-  background: #eef2ff;
+  background: hsl(231, 100%, 99%);
 }
 
 .empty-message {
@@ -963,17 +974,63 @@ tr:hover {
 /* Button back */
 .btn.back {
   display: inline-block;
-  background: #3b82f6;
+  background: var(--secondary-color);
   color: #fff;
   padding: 10px 16px;
   text-decoration: none;
   border-radius: 6px;
-  margin-top: 30px;
+  margin-top: 50px;
   transition: background 0.3s ease;
 }
 
 .btn.back:hover {
-  background: #2563eb;
+  background: rgb(0, 206, 0);
+}
+
+.emailStatus-result{
+  display: flex;
+  gap: 4px;
+}
+.emailStatus-result div i{
+  font-size: 20px;
+}
+.emailStatus-result div .valid,.emailStatus-result div .invalid,.emailStatus-result div .unknown{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+}
+.emailStatus-result .valid{
+  color: rgb(0, 208, 24);
+  background-color: rgba(0, 217, 0, 0.147);
+
+}
+.emailStatus-result .invalid{
+  color: rgb(223, 0, 0);
+  background-color: rgba(255, 0, 0, 0.173);
+}
+.emailStatus-result .unknown{
+  color: rgb(232, 159, 0);
+  background-color: rgba(255, 179, 0, 0.132);
+}
+.dropdown-mail{
+font-weight: 600;
+margin-bottom: 5px;
+}
+.dropdown-details-container{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 6px;
+}
+.dropdown-details-container p:nth-child(1) span:first-child{
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.detail-item p:nth-child(2){
+  margin-top: 10px;
 }
 @media (max-width: 720px) {
   .container { padding: 18px; }

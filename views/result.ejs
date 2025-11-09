@@ -9,11 +9,11 @@
   <body>
     <%- include("partiels/navbar") %>
 
-      <section class="form-result container">
+      <section id="form-result" class="form-result  container">
         <img class="ooorganize" src="/svgs/ooorganize.svg" alt="">
         <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
           <div class="form-group">
-            <label class="typemail" for="manualEmails">Saisissez un ou plusieurs e-mails manuellement <br>(un par ligne
+            <label class="typemail" id="typemail" for="manualEmails">Saisissez un ou plusieurs e-mails manuellement <br>(un par ligne
               ou séparés par une virgule).</label>
             <div class="input-btn-submit-bl">
               <textarea name="manualEmails" id="manualEmails" rows="2"
@@ -119,14 +119,20 @@
                     <tr class="dropdown-row" id="dropdown-<%= index %>">
                       <td colspan="7">
                         <div>
-                          <div>
+                          <div class="emailStatus-result">
                             <div>
-                              <i class="bi bi-shield-fill-exclamation"></i>
-                              <i class="bi bi-shield-fill-x"></i> 
-                              <i class="bi bi-shield-fill-check"></i>              
+                              <% if (r.emailStatus === 'valid') { %>
+                                <i  class="bi bi-shield-fill-check status <%= r.emailStatus %>"></i>              
+                                <% } else if (r.emailStatus === 'invalid') { %>
+                                  <i class="bi bi-shield-fill-x status <%= r.emailStatus %>"></i> 
+                                <% } else if (r.format === 'unknown') { %>
+                                    <i class="bi bi-shield-fill-exclamation status <%= r.emailStatus %>"></i>
+                                  <% } else { %>
+                                    <i class="bi bi-shield-slash-fill status <%= r.emailStatus %>"></i>
+                                <% } %>
                             </div>
                             <div>
-                              <p class="mail">
+                              <p class="dropdown-mail">
                                 <%= r.email %>
                               </p>
                               <p>
@@ -136,10 +142,10 @@
 
                             </div>
                           </div>
-                          <div class="details-container">
+                          <div class="dropdown-details-container">
                             <!-- FORMAT -->
                             <div class="detail-item">
-                              <p>Format :
+                              <p><span>Format :</span> 
                                 <span class="status <%= r.format %>"><%= r.format %></span>
                               </p>
                               <p>
@@ -157,7 +163,7 @@
                           
                             <!-- TYPE -->
                             <div class="detail-item">
-                              <p>Type :
+                              <p><span>Type :</span>
                                 <span class="status <%= r.type %>"><%= r.type %></span>
                               </p>
                               <p>
@@ -179,7 +185,7 @@
                           
                             <!-- SERVER -->
                             <div class="detail-item">
-                              <p>Serveur :
+                              <p><span>Serveur :</span> 
                                 <span class="status <%= r.serverType %>"><%= r.serverType || 'inconnu' %></span>
                               </p>
                               <p>
@@ -201,7 +207,7 @@
                           
                             <!-- EMAIL STATUS -->
                             <div class="detail-item">
-                              <p>Statut :
+                              <p><span>Statut :</span> 
                                 <span class="status <%= r.emailStatus %>"><%= r.emailStatus %></span>
                               </p>
                               
@@ -209,7 +215,7 @@
                           
                             <!-- SCORE -->
                             <div class="detail-item">
-                              <p>Score :
+                              <p><span>Score :</span>
                                 <span class="status <%= r.score > 70 ? 'goodScore' : r.score > 40 ? 'mediumScore' : 'badScore' %>">
                                   <%= r.score %>
                                 </span>
@@ -227,7 +233,7 @@
                           
                             <!-- SUBSTATUS -->
                             <div class="detail-item">
-                              <p>Sous-statut :
+                              <p><span>Sous-statut :</span> 
                                 <span class="status <%= r.subStatus %>"><%= r.subStatus || 'aucun' %></span>
                               </p>
                               <p>
@@ -246,25 +252,14 @@
                             </div>
                           </div>
                         </div>
-                        📧 <b>Email :</b> <br>
-                        ⚙️ <b>Serveur :</b>
-                        <%= r.serverType || 'Non spécifié' %><br>
-                          🔍 <b>Statut :</b>
-                          <%= r.emailStatus || 'Inconnu' %><br>
-                            💡 <b>Score :</b>
-                            <%= r.score || 'N/A' %><br>
-                              🧩 <b>Sous-statut :</b>
-                              <%= r.subStatus || 'Aucun' %><br>
-                                🕓 <b>Date de vérification :</b>
-                                <%= new Date().toLocaleString() %>
-                      </td>
+                       
                     </tr>
                     <% }) %>
                       <% } %>
             </tbody>
           </table>
 
-          <a class="btn back" href="/">Valider plus d'emails</a>
+          <a class="btn back" href="#form-result">Valider plus d'emails</a>
         </div>
       </section>
 

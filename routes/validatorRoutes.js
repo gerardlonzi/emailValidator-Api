@@ -9,8 +9,12 @@ const upload = multer({ dest: CONFIG.UPLOADS_DIR });
 router.get('/', (req, res) => res.render('index', { message: null }));
 router.post('/validate', upload.single('emailFile'), handleValidation);
 router.get('/validate', (req,res)=>{
-return res.render("result", { message: null,csvPath :null,
-    validCsvPath:null,results:null })
+    res.render('result', {
+        message: null,
+        csvPath: null,
+        validCsvPath: null,
+        results:  null
+      });
 });
 
 export default router;

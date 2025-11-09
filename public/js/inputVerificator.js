@@ -2,10 +2,12 @@ const form = document.getElementById('validateFormAjax');
 const fileInput = document.getElementById('emailFile');
 const textarea = document.getElementById('manualEmails');
 const btn = document.getElementById('validateBtn');
-const processing = document.getElementById('processing');
 const messageBox = document.getElementById('formMessage');
 
 form?.addEventListener('submit', async function (e) {
+  fileInput.disabled = true;
+  textarea.disabled = true;
+  btn.disabled = true;
 
   messageBox.textContent = "";
   messageBox.classList.add("hidden");
@@ -23,10 +25,6 @@ form?.addEventListener('submit', async function (e) {
     const fd = new FormData(form);
     await fetch(form.action, { method: 'POST', body: fd });
 
-    fileInput.disabled = true;
-    textarea.disabled = true;
-    btn.disabled = true;
-    processing.classList.remove('hidden');
   }
 });
 
@@ -68,7 +66,14 @@ fileInputs?.addEventListener('change', () => {
 
 
 window.addEventListener('load', ()=>{
-  fileInputs.value = ''; 
+  fileInput.disabled = false;
+  textarea.disabled = false;
+  btn.disabled = false;
+
+
+
+});
+window.addEventListener('DOMContentLoaded', ()=>{
 
 });
 
