@@ -4,7 +4,7 @@ const textarea = document.getElementById('manualEmails');
 const btn = document.getElementById('validateBtn');
 const messageBox = document.getElementById('formMessage');
 
-form?.addEventListener('submit', async function (e) {
+form?.addEventListener('submit', function (e) {
   fileInput.disabled = true;
   textarea.disabled = true;
   btn.disabled = true;
@@ -20,14 +20,16 @@ form?.addEventListener('submit', async function (e) {
     messageBox.textContent = "⚠️ Veuillez importer un fichier CSV ou renseigner au moins une adresse e-mail.";
     messageBox.classList.remove("hidden");
     messageBox.classList.add("error");
+
+    fileInput.disabled = false;
+    textarea.disabled = false;
+    btn.disabled = false;
+
     return;
-  } else {
-    const fd = new FormData(form);
-    await fetch(form.action, { method: 'POST', body: fd });
-
   }
+  
+  // 👉 PAS DE FETCH ICI
 });
-
 const fileInputs = document.getElementById('emailFile');
 const label = document.getElementById('uploadLabel');
 const uploadAnim = document.getElementById('uploadAnimation');
@@ -71,9 +73,6 @@ window.addEventListener('load', ()=>{
   btn.disabled = false;
 
 
-
-});
-window.addEventListener('DOMContentLoaded', ()=>{
 
 });
 
