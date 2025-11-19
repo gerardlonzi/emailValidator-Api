@@ -50,27 +50,34 @@
           <p id="fileNameDisplay" class="file-name-display"
             style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
 
-          <p class="upload-message" id="uploadMessage"></p>
+          <p class="upload-message" id="uploadMessage download-links" ></p>
 
         </form>
-      </section>
+      </section >
 
-      <section class="tab-results">
+      <section class="tab-results" >
         <div class="container">
 
-          <div class="download-links" id="download-links">
+          <div class="download-links" >
             <h2>Validation Results</h2>
 
             <div>
               <% if (csvPath) { %>
-                <a class="btn" href="<%= csvPath %>" download><i style="margin-right: 5px;" class="bi bi-download"></i>
+                <a class="btn" href="<%= csvPath %>" download data-missing="<%= filesMissing?.csv ? 'true' : 'false' %>"><i style="margin-right: 5px;" class="bi bi-download"></i>
                   Télécharger tous les résultats CSV</a>
                 <% } %>
                   <% if (validCsvPath) { %>
                     <a class="btn valid" href="<%= validCsvPath %>" download> <i style="margin-right: 5px;"
-                        class="bi bi-download"></i> Télécharger les emails valides</a>
+                        class="bi bi-download" data-missing="<%= filesMissing?.validCsv ? 'true' : 'false' %>"></i> Télécharger les emails valides</a>
                     <% } %>
             </div>
+            <div id="popup" class="popup">
+              <div class="popup-content">
+                <span id="popup-close" class="popup-close">&times;</span>
+                <p>⚠️ Le fichier que vous essayez de télécharger a été supprimé ou n’est plus disponible.</p>
+              </div>
+            </div>
+            
           </div>
 
           <table id="resultsTable">

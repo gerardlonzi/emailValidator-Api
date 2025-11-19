@@ -1,0 +1,2 @@
+email,format,type,serverType,emailStatus,score,subStatus
+lonzigerard@gmail.com,valid,webmail,smtp_accepted,valid,100,smtp_accepted

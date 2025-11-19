@@ -42,10 +42,12 @@ export async function handleValidation(req, res) {
   const validPath = path.join(CONFIG.RESULTS_DIR, `valid-${timestamp}.csv`);
   if (validEmails.length) await saveCsv(validEmails, validPath);
 
-  res.render('result', {
+  req.session.validationData = {
     results,
-    message: null,
     csvPath: `/results/result-${timestamp}.csv`,
     validCsvPath: validEmails.length ? `/results/valid-${timestamp}.csv` : null,
-  });
+    timestamp
+  };
+
+  res.redirect('/validate/#download-links');
 }
