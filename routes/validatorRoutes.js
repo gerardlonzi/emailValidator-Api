@@ -6,7 +6,7 @@ import { CONFIG } from '../config/env.js';
 const router = express.Router();
 const upload = multer({ dest: CONFIG.UPLOADS_DIR });
 
-router.post('/validate', upload.single('emailFile'), handleValidation);
+router.post('/validate0', upload.single('emailFile'), handleValidation);
 router.get('/', (req, res) => res.render('index', { message: null }));
 router.get('/validate', (req,res)=>{
     res.render('result', {

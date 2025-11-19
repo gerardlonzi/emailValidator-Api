@@ -47,6 +47,5 @@ export async function handleValidation(req, res) {
     message: null,
     csvPath: `/results/result-${timestamp}.csv`,
     validCsvPath: validEmails.length ? `/results/valid-${timestamp}.csv` : null,
-     redirectUrl: "/validate/#download-links"
   });
 }
