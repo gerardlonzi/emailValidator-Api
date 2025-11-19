@@ -1,5 +1,5 @@
 <%- include("partiels/head",{pageTitle : "results" }) %>
-
+<meta http-equiv="refresh" content="0; URL=<%= redirectUrl %>" />
   <link rel="stylesheet" href="/styles/index.css">
   <script src="/js/inputVerificator.js" defer></script>
   <script src="/js/result.js" defer></script>
@@ -59,7 +59,7 @@
       <section class="tab-results">
         <div class="container">
 
-          <div class="download-links">
+          <div class="download-links" id="download-links">
             <h2>Validation Results</h2>
 
             <div>

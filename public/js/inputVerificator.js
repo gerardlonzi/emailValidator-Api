@@ -5,9 +5,6 @@ const btn = document.getElementById('validateBtn');
 const messageBox = document.getElementById('formMessage');
 
 form?.addEventListener('submit', function (e) {
-  fileInput.disabled = true;
-  textarea.disabled = true;
-  btn.disabled = true;
 
   messageBox.textContent = "";
   messageBox.classList.add("hidden");
@@ -20,16 +17,15 @@ form?.addEventListener('submit', function (e) {
     messageBox.textContent = "⚠️ Veuillez importer un fichier CSV ou renseigner au moins une adresse e-mail.";
     messageBox.classList.remove("hidden");
     messageBox.classList.add("error");
-
-    fileInput.disabled = false;
-    textarea.disabled = false;
-    btn.disabled = false;
-
     return;
   }
-  
-  // 👉 PAS DE FETCH ICI
+
+  textarea.readOnly = true;    
+  btn.disabled = true;         
+  btn.disabled = true;         
+  btn.textContent = "Validation"
 });
+
 const fileInputs = document.getElementById('emailFile');
 const label = document.getElementById('uploadLabel');
 const uploadAnim = document.getElementById('uploadAnimation');
