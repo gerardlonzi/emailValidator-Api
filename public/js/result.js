@@ -12,4 +12,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  const popup = document.getElementById('popup');
+  const closeBtn = document.getElementById('popup-close');
+
+  // Sélectionne uniquement les liens de téléchargement que tu veux contrôler
+  const downloadLinks = document.querySelectorAll('.download-link');
+
+  downloadLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      if (link.dataset.missing === 'true') { // si le fichier est supprimé
+        e.preventDefault(); // empêche le téléchargement
+        popup.style.display = 'flex'; // affiche le popup
+      }
+    });
+  });
+
+  // Fermer le popup en cliquant sur la croix
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // Fermer le popup si clic en dehors du contenu
+  popup.addEventListener('click', e => {
+    if (e.target === popup) popup.style.display = 'none';
+  });
 });

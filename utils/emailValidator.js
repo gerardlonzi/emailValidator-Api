@@ -3,7 +3,7 @@ import validator from 'validator';
 import dns from 'dns';
 import { SMTPClient } from 'smtp-client';
 import crypto from 'crypto';
-import disposableDomains from 'disposable-email-domains/index.json' with { type: 'json' };
+import disposableDomains from 'disposable-email-domains/index.json' assert { type: 'json' };
 import { CONFIG } from '../config/env.js';
 
 function randomLocalPart() { return 'r' + crypto.randomBytes(6).toString('hex'); }

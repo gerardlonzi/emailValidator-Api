@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 export const CONFIG = {
   PORT: process.env.PORT || 3000,
   API_KEY: process.env.API_KEY || '',
+  DETAIL_SECRET: process.env.DETAIL_SECRET || '',
   FILE_LIFETIME_MIN: Number(process.env.FILE_LIFETIME_MIN || 60),
   VERIFIER_DOMAIN: process.env.VERIFIER_DOMAIN || 'example.com',
   MAIL_FROM_LOCALPART: process.env.MAIL_FROM_LOCALPART || 'validator',
