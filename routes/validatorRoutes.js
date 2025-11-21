@@ -15,7 +15,7 @@ router.get('/validate', (req, res) => {
 
   res.render('result', {
     results: data?.results || null,
-    message: data || null ,
+    message: data?.message || null ,
     csvPath: data?.csvPath && fs.existsSync(path.join(CONFIG.RESULTS_DIR, path.basename(data.csvPath))) ? data.csvPath : null,
     validCsvPath: data?.validCsvPath && fs.existsSync(path.join(CONFIG.RESULTS_DIR, path.basename(data.validCsvPath))) ? data.validCsvPath : null,
     filesMissing: {

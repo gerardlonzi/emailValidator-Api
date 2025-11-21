@@ -31,7 +31,7 @@ const label = document.getElementById('uploadLabel');
 const uploadAnim = document.getElementById('uploadAnimation');
 const loader = uploadAnim.querySelector('.circle-loader');
 const checkmark = uploadAnim.querySelector('.checkmark');
-const message = document.getElementById('uploadMessage');
+let message = document.getElementById('uploadMessage');
 const fileNameDisplay = document.getElementById('fileNameDisplay');
 
 fileInputs?.addEventListener('change', () => {
@@ -39,6 +39,7 @@ fileInputs?.addEventListener('change', () => {
     const fileName = fileInputs.files[0].name;
 
     btn.disabled = true;
+    messageBox.textContent=""
     btn.textContent="chargement..."
     message.textContent = "⏳ Téléversement du fichier en cours...";
     message.classList.remove('hidden');

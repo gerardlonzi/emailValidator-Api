@@ -9,7 +9,7 @@
     <%- include("partiels/navbar") %>
 
       <section id="form-result" class="form-result  container">
-        <img class="ooorganize" src="/svgs/ooorganize.svg" alt="">
+        <img class="ooorganize" style="opacity: 0.1;" src="/svgs/ooorganize.svg" alt="">
         <form action="/validate" id="validateFormAjax" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label class="typemail" id="typemail" for="manualEmails">Saisissez un ou plusieurs e-mails manuellement <br>(un par ligne
@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <% if (message) { %>
+            <% if (message ) { %>
               <div id="formMessage" class="alert error fade-in">
                 <%= message %>
               </div>
@@ -50,11 +50,11 @@
           <p id="fileNameDisplay" class="file-name-display"
             style="font-weight: 600; color: #00ba4b;font-style: italic;"></p>
 
-          <p class="upload-message" id="uploadMessage download-links" ></p>
+          <p class="upload-message" id="uploadMessage"></p>
 
         </form>
       </section >
-
+      <p id="download-links"></p>
       <section class="tab-results" >
         <div class="container">
 

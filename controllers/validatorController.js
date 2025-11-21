@@ -18,13 +18,9 @@ export async function handleValidation(req, res) {
   const file = req.file;
   const fileEmails = file ? await parseCsvFile(file.path) : [];
   const allEmails = Array.from(new Set([...manualEmails, ...fileEmails]));
-  console.log(manualEmails);
-  console.log(fileEmails);
-  console.log(allEmails);
-  
-
   if (!allEmails.length) {
     return res.render('result', { results: [], message: 'Aucune adresse trouvée.', csvPath: null,validCsvPath: null });
+    
   }
 
   const limit = pLimit(CONFIG.CONCURRENCY_LIMIT);
@@ -46,7 +42,8 @@ export async function handleValidation(req, res) {
     results,
     csvPath: `/results/result-${timestamp}.csv`,
     validCsvPath: validEmails.length ? `/results/valid-${timestamp}.csv` : null,
-    timestamp
+    timestamp,
+    message:null
   };
 
   res.redirect('/validate/#download-links');

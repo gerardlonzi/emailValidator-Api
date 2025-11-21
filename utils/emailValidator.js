@@ -3,7 +3,7 @@ import validator from 'validator';
 import dns from 'dns';
 import { SMTPClient } from 'smtp-client';
 import crypto from 'crypto';
-import disposableDomains from 'disposable-email-domains/index.json' assert { type: 'json' };
+import disposableDomains from 'disposable-email-domains/index.json' with { type: 'json' };
 import { CONFIG } from '../config/env.js';
 
 function randomLocalPart() { return 'r' + crypto.randomBytes(6).toString('hex'); }
@@ -23,13 +23,13 @@ export async function hasMx(domain) {
 export async function checkSmtpRecipient(email, opts = {}) {
   const timeoutMs = opts.timeoutMs ?? CONFIG.SMTP_TIMEOUT_MS;
   const fromAddress = opts.fromAddress ?? CONFIG.MAIL_FROM;
-  const domain = email.split('@')[1];
-  if (!domain) return { ok: false, text: 'invalid_domain' };
+  const domain = email.split('@')[1]; // Correction : utiliser l'index 1 pour le domaine
+  if (!domain) return { ok: false, text: 'invalid_domain', subStatus: '5.0.1 - Syntaxe invalide' };
 
   let mxRecords;
   try { mxRecords = await dns.promises.resolveMx(domain); }
-  catch (err) { return { ok: false, text: 'no_mx', raw: String(err) }; }
-  if (!mxRecords || mxRecords.length === 0) return { ok: false, text: 'no_mx' };
+  catch (err) { return { ok: false, text: 'no_mx', subStatus: '5.4.4 - Pas d\'enregistrement DNS MX', raw: String(err) }; }
+  if (!mxRecords || mxRecords.length === 0) return { ok: false, text: 'no_mx', subStatus: '5.4.4 - Pas d\'enregistrement DNS MX' };
   mxRecords.sort((a,b) => a.priority - b.priority);
 
   for (const mx of mxRecords) {
@@ -41,20 +41,23 @@ export async function checkSmtpRecipient(email, opts = {}) {
       await client.mail({ from: fromAddress });
       const rcpt = await client.rcpt({ to: email });
       await client.quit();
-      return { ok: true, code: 250, text: 'accepted', mx: host, raw: rcpt };
+      // Code et signification
+      return { ok: true, code: 250, text: 'accepted', mx: host, subStatus: '2.0.0 - Message accepté', raw: rcpt };
     } catch (err) {
       await client.quit().catch(()=>{});
       const raw = String(err && err.message ? err.message : err);
-      if (/ENOTFOUND|ECONNREFUSED|timeout/i.test(raw)) return { ok:false, text:'network_error', raw };
-      if (/5\d{2}/.test(raw) && /(550|5\.1\.1|user unknown|not found)/i.test(raw)) return { ok:false, text:'rejected', mx:host, raw };
-      if (/4\d{2}/.test(raw) || /temporar|greylist|try again/i.test(raw)) return { ok:false, text:'temporary', mx:host, raw };
+      // Codes et significations pour les erreurs
+      if (/ENOTFOUND|ECONNREFUSED|timeout/i.test(raw)) return { ok:false, text:'network_error', subStatus: '4.4.1 - Erreur réseau/Timeout', raw };
+      if (/5\d{2}/.test(raw) && /(550|5\.1\.1|user unknown|not found)/i.test(raw)) return { ok:false, text:'rejected', mx:host, subStatus: '5.1.1 - Utilisateur inconnu', raw };
+      if (/4\d{2}/.test(raw) || /temporar|greylist|try again/i.test(raw)) return { ok:false, text:'temporary', mx:host, subStatus: '4.2.1 - Service temporairement indisponible', raw };
+      if (/5\d{2}/.test(raw)) return { ok:false, text:'rejected_generic', mx:host, subStatus: '5.0.0 - Erreur générique (5xx)', raw };
     }
   }
-  return { ok:false, text:'all_mx_failed' };
+  return { ok:false, text:'all_mx_failed', subStatus: '4.4.1 - Aucun serveur MX n\'a répondu' };
 }
 
 function guessType(domain) {
-  const webmails = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com'];
+  const webmails = ['gmail.com','yahoo.com','outlook.com','hotmail.com','live.com','icloud.com','laposte.fr','free.fr','orange.fr'];
   return webmails.includes(domain) ? 'webmail' : 'custom';
 }
 
@@ -74,42 +77,81 @@ export async function validateOne(email) {
   const out = { email, format: 'unknown', type: 'unknown', serverType: 'unknown', emailStatus: 'unknown', score: 0, subStatus: '' };
   try {
     if (!validator.isEmail(email)) {
-      out.format = 'invalid'; out.emailStatus = 'invalid'; out.subStatus = 'invalid_syntax'; out.score = computeScore(out); return out;
+      out.format = 'invalid'; out.emailStatus = 'invalid'; out.subStatus = '5.0.1 - Syntaxe invalide'; out.score = computeScore(out); return out;
     }
-    const domain = email.split('@')[1].toLowerCase();
+    // Correction : utiliser l'index 1 pour le domaine et toLowerCase()
+    const domain = email.split('@')[1].toLowerCase(); 
     out.type = guessType(domain);
 
     if (Array.isArray(disposableDomains) && disposableDomains.includes(domain)) {
-      out.format = 'risky'; out.emailStatus = 'risky'; out.subStatus = 'disposable'; out.score = computeScore(out); return out;
+      out.format = 'risky'; out.emailStatus = 'risky'; out.subStatus = 'Domaine jetable (disposable)'; out.score = computeScore(out); return out;
     }
 
     let mxOk;
     try { mxOk = await hasMx(domain); }
-    catch (e) { out.format='unknown'; out.subStatus='network_error'; out.emailStatus='unknown'; out.score=computeScore(out); return out; }
+    catch (e) { 
+        out.format='unknown'; 
+        out.subStatus='4.4.1 - Erreur réseau/Timeout'; 
+        out.emailStatus='unknown'; 
+        out.score=computeScore(out); 
+        return out; 
+    }
 
-    if (!mxOk) { out.format='invalid'; out.subStatus='no_mx'; out.emailStatus='invalid'; out.score=computeScore(out); return out; }
+    if (!mxOk) { 
+        out.format='invalid'; 
+        out.subStatus='5.4.4 - Pas d\'enregistrement DNS MX'; 
+        out.emailStatus='invalid'; 
+        out.score=computeScore(out); 
+        return out; 
+    }
 
     const smtpRes = await checkSmtpRecipient(email);
-    if (smtpRes.text === 'network_error') { out.format='unknown'; out.subStatus='network_error'; out.emailStatus='unknown'; out.score=computeScore(out); return out; }
+    if (smtpRes.text === 'network_error') { 
+        out.format='unknown'; 
+        out.subStatus=smtpRes.subStatus; // '4.4.1 - Erreur réseau/Timeout'
+        out.emailStatus='unknown'; 
+        out.score=computeScore(out); 
+        return out; 
+    }
 
     if (smtpRes.ok && smtpRes.code === 250) {
       // detect catch-all (quick)
       const fake = `${randomLocalPart()}@${domain}`;
       const fakeRes = await checkSmtpRecipient(fake, { timeoutMs: 4000 });
       if (fakeRes && fakeRes.ok && fakeRes.code === 250) {
-        out.format='risky'; out.subStatus='catch_all'; out.emailStatus='risky'; out.serverType='smtp_accepted'; out.score=computeScore(out); return out;
+        out.format='risky'; out.subStatus='Piège à spam (catch-all)'; out.emailStatus='risky'; out.serverType=smtpRes.mx; out.score=computeScore(out); return out;
       }
-      out.format='valid'; out.serverType='smtp_accepted'; out.emailStatus='valid'; out.subStatus='smtp_accepted'; out.score=computeScore(out); return out;
+      out.format='valid'; 
+      out.serverType=smtpRes.mx; // Utilise le nom d'hôte MX réel ici
+      out.emailStatus='valid'; 
+      out.subStatus='2.0.0 - Message accepté'; 
+      out.score=computeScore(out); 
+      return out;
     }
 
     if (smtpRes.text === 'rejected' || smtpRes.code === 550) {
-      out.format='invalid'; out.serverType='rejected'; out.emailStatus='invalid'; out.subStatus='smtp_rejected'; out.score=computeScore(out); return out;
+      out.format='invalid'; 
+      out.serverType=smtpRes.mx; // Utilise le nom d'hôte MX réel ici
+      out.emailStatus='invalid'; 
+      out.subStatus=smtpRes.subStatus || '5.1.1 - Utilisateur inconnu'; 
+      out.score=computeScore(out); 
+      return out;
     }
-
-    out.format='unknown'; out.serverType=smtpRes.text || 'unknown'; out.emailStatus='unknown'; out.subStatus=smtpRes.text || 'smtp_check_failed'; out.score=computeScore(out);
+    
+    // Pour toutes les autres issues inconnues ou temporaires
+    out.format='unknown'; 
+    out.serverType=smtpRes.mx || 'unknown'; 
+    out.emailStatus='unknown'; 
+    out.subStatus=smtpRes.subStatus || '4.0.0 - Erreur temporaire générique';
+    out.score=computeScore(out);
     return out;
+
   } catch (err) {
-    out.format='unknown'; out.subStatus='error'; out.emailStatus='unknown'; out.serverType='error'; out.score=computeScore(out);
+    out.format='unknown'; 
+    out.subStatus='5.0.0 - Erreur interne/exception'; 
+    out.emailStatus='unknown'; 
+    out.serverType='error'; 
+    out.score=computeScore(out);
     return out;
   }
 }
