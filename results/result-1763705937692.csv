@@ -1,2 +1,0 @@
-email,format,type,serverType,emailStatus,score,subStatus
-herman@gmail.com,invalid,webmail,rejected,invalid,10,smtp_rejected

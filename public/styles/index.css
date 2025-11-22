@@ -234,7 +234,6 @@ background-color: rgb(247, 247, 247);
 .upload-message {
   margin-top: 10px;
   font-weight: 600;
-  font-size: 1rem;
 color: white;
 }
 
@@ -403,6 +402,7 @@ color: #001A5A;
 .accurate-img img{
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .more-email-items{
   margin-top: 40px;
@@ -1061,21 +1061,265 @@ margin-bottom: 5px;
   font-size: 20px;
   cursor: pointer;
 }
-
-
-
-
-@media (max-width: 720px) {
-  .container { padding: 18px; }
-  table, thead, tbody, th, td, tr { display: block; }
-  thead { display: none; }
-  tbody tr { margin-bottom: 12px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(2,6,23,0.04); }
-  tbody td { display: flex; justify-content: space-between; padding: 12px; border-bottom: none; }
-  tbody td::before { content: attr(data-label); font-weight: 700; color: #374151; margin-right: 8px; }
-}
-
 .small { font-size: 12px; color: #56607a; }
 pre { white-space: pre-wrap; font-size: 12px; background: #fbfcfe; padding: 10px; border-radius: 8px; color: #0f1724; border: 1px solid #eef2f6; overflow: auto; max-height: 220px; }
 
 input:focus, textarea:focus, button:focus, a.btn:focus { outline: 3px solid rgba(11,93,196,0.12); outline-offset: 2px; }
 
+
+@media screen and (max-width: 1350px) {
+  .container,.footer-container{
+    padding-inline: 80px;
+  }
+  .footer{
+    padding-inline: 0;
+  }
+  .footer-container{
+    gap: 40px;
+  }
+}
+@media screen and (max-width: 1182px) {
+  .container,.footer-container{
+    padding-inline: 40px;
+  }
+  .footer-container{
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+ .banner .form-group.tv{
+  width: 100%;
+ }
+ .banner .intro h1{
+  font-size: 40px;
+  line-height: 60px;
+ }
+ .banner .intro h1 br{
+  display: none;
+ }
+ .client-compagnies h2,.intro-sec h2{
+  margin-bottom: 10px;
+}
+.client-compagnies h2,.how-validate h2, .accurate h2,.more-email h2,.intro-sec h2{
+  font-size: 25px;
+  text-align: center;
+}
+body{
+  font-size: 14px;
+}
+.form-group.tv label,.how-validate-items .step,.how-validate-items .step-name,.accurate-items p,.elem-desc .name,.faq-question span{
+  font-size: 17px;
+}
+.how-validate-items {
+  padding: 20px 25px;
+}
+.how-validate-items .icons{
+  width: 70px;
+  height: 70px;
+}
+.how-validate-items .icons i{
+  font-size: 30px;
+}
+.slider .slide{
+  width: 150px;
+  height: 100px;
+}
+.slider .slide img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.accurate-items {
+  flex-direction: column-reverse;
+}
+.accurate-items>div{
+  width: 100%;
+}
+.testimonial-item {
+  height: 250px;          
+  font-size: 12px;
+}
+.profile-texti .name{
+  font-weight: 500;
+}
+
+.testimonial-item>hr{
+display: none;
+}
+.logo img, .footer-logo img{
+  width: 250px;
+}
+.banner .intro p br{
+  display: none;
+}
+.more-email-items {
+  
+  gap: 10px;
+}
+}
+
+@media screen and (max-width: 815px) {
+.container{
+  padding-inline: 10px;
+}
+  .logo img, .footer-logo img{
+    width: 190px;
+  }
+  .banner .intro h1 {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .form-group.tv label,.how-validate-items .step,.how-validate-items .step-name,.accurate-items p,.elem-desc .name,.faq-question span{
+    font-size: 14px;
+  }
+  .client-compagnies h2,.how-validate h2, .accurate h2,.more-email h2,.intro-sec h2{
+    font-size: 20px;
+  }
+  
+  .form-group.tv{
+    padding: 20px;
+  }
+  .btn-bl #validateBtn {
+    gap: 10px;
+    padding: 20px 30px;
+    font-size: 15px;
+  }
+  .form-group.tv textarea {
+    padding:15px 19px;
+    font-size: 16px;
+  }
+  .how-validate-items .icons{
+    width: 50px;
+    height: 50px;
+  }
+  .how-validate-items .icons i{
+    font-size: 20px;
+  }
+  .testimonial-item {
+         
+    padding: 10px;
+    
+    font-size: 13px;
+  }
+  
+  .img-desc>div:nth-child(2){
+    font-size: 20px;
+  }
+  .profile-texti img{
+    width: 50px;
+    height: 50px;
+  }
+  .profile-texti>div{
+    gap: 1px;
+  }
+  .testimonial-item>p{
+    margin-top: 10px;
+  }
+  
+  .accurate-items a {
+    padding: 10px 30px;
+    font-size: 15px;
+    
+  }
+  .uploadMessage{
+    font-size: 12px;
+}
+
+
+}
+@media screen and (max-width: 680px){
+  body{
+    font-size: 12px;
+  }
+  .container{
+    padding-inline: 7px;
+  }
+    .banner .intro h1 {
+      font-size: 20px;
+      line-height: 29px;
+    }
+    .banner .intro p {
+      display: none;
+    }
+    .form-group.tv label,.how-validate-items .step,.how-validate-items .step-name,.accurate-items p,.elem-desc .name,.faq-question span{
+      font-size: 12px;
+    }
+    .accurate-items p{
+      line-height: 20px;
+    }
+    .client-compagnies h2,.how-validate h2, .accurate h2,.more-email h2,.intro-sec h2{
+      font-size: 15px;
+    }
+    
+    .form-group.tv{
+      padding: 14px;
+    }
+    .btn-bl #validateBtn {
+      gap: 7px;
+      padding: 15px 30px;
+      font-size: 13px;
+    }
+    .form-group.tv textarea {
+      padding:9px 19px;
+      font-size: 13px;
+    }
+    .how-validate-items .icons{
+      width: 30px;
+      height: 30px;
+    }
+    .how-validate-items .icons i{
+      font-size: 12px;
+    }
+    .how-validate-items{
+      padding: 10px 15px
+    }
+    .testimonial-item {
+           
+      padding: 10px;
+      
+      font-size: 13px;
+    }
+    
+    .img-desc>div:nth-child(2){
+      font-size: 12px;
+    }
+    .profile-texti>div{
+      gap: 0.5px;
+    }
+.testimonial-track  {
+  gap: 10px;
+}  
+    .accurate-items a {
+      padding: 10px 20px;
+      font-size: 12px;
+      
+    }
+    .banner{
+      height: 100vh;
+    }
+    .input-file label {
+      gap: 5px;
+      color: white;
+      padding-bottom: 5px;
+      margin-right: 3px;
+    }
+    .form-group.input-file a {
+      display: inline-flex;
+      text-decoration: none;
+      padding-bottom: 5px;
+        padding-left: 3px;
+      padding-left: 4px;
+    }
+    .more-email-item .more-email-img-bl {
+      height: 100px;
+      border-radius: 5px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+  .how-validate-bl {
+    flex-wrap: wrap;
+  }
+  .more-email-items{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
