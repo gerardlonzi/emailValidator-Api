@@ -67,6 +67,20 @@ header ul a:hover{
   color: var(--secondary-color);
   transition: .4s ease;
 }
+.menu-toggle,.close-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 28px;
+  height: 3px;
+  background: #222;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
 .banner{
   padding-top: 80px;
 }
@@ -252,6 +266,7 @@ color: white;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
 }
 .client-compagnies h2,.intro-sec h2{
   margin-bottom: 30px;
@@ -513,7 +528,6 @@ justify-content: space-between;
   color: #333;
 }
 
-/* ITEM FAQ */
 .faq-item {
   border-bottom: 1px solid #eee;
   padding: 20px 0;
@@ -548,7 +562,6 @@ justify-content: space-between;
   transform: rotate(90deg);
 }
 
-/* RÉPONSE */
 .faq-answer {
   max-height: 0;
   overflow: hidden;
@@ -560,7 +573,7 @@ justify-content: space-between;
 }
 
 .faq-item.active .faq-answer {
-  max-height: 200px; /* ajustable selon le contenu */
+  max-height: 200px; 
   opacity: 1;
   margin-top: 10px;
 }
@@ -585,14 +598,12 @@ justify-content: space-between;
   margin: auto;
 }
 
-/* LOGO + INFO */
 
 .footer-about p {
   line-height: 1.6;
   font-size: 14px;
 }
 
-/* LINKS */
 .footer-links ul, .footer-shop ul {
   list-style: none;
   padding: 0;
@@ -613,7 +624,6 @@ justify-content: space-between;
   color: var(--secondary-color);
 }
 
-/* NEWSLETTER */
 .newsletter-box {
   display: flex;
   margin: 15px 0;
@@ -652,7 +662,6 @@ justify-content: space-between;
   background: var(--green-text);
 }
 
-/* SOCIAL ICONS */
 .social-icons a {
   display: inline-block;
   color: #fff;
@@ -671,7 +680,6 @@ justify-content: space-between;
   color: #111;
 }
 
-/* FOOTER BOTTOM */
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
@@ -681,7 +689,6 @@ justify-content: space-between;
   color: #aaa;
 }
 
-/* SCROLL TO TOP BUTTON */
 .scroll-top {
   position: fixed;
   bottom: 25px;
@@ -773,42 +780,6 @@ justify-content: space-between;
   100% { transform: rotate(360deg); }
 }
 
-/* .form-group { margin-bottom: 16px; }
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #1f2937;
-}
-input[type="file"],
-textarea {
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #e6e9ee;
-  background: #fafbfc;
-  font-size: 14px;
-  color: #111827;
-  outline: none;
-}
-input[type="file"] {
-  padding: 8px;
-}
-textarea { min-height: 120px; resize: vertical; }
-
-button, a.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-  transition: transform .06s ease, box-shadow .06s ease, opacity .12s;
-} */
 button:active { transform: translateY(1px); }
 button[disabled], button.disabled {
   opacity: 0.6;
@@ -930,20 +901,17 @@ tr:hover {
   }
 }
 
-/* --- Status color coding --- */
 .status {
   text-transform: capitalize;
   padding: 6px;
   font-size: 14px;
 }
 
-/* Format & Status colors */
 .valid,.smtp_accepted,.goodScore { background: #00ff2209; color: #00ab25;  }
 .invalid,.rejected,.badScore,.invalid_syntax,.network_error { background: #ff000007; color: rgb(193, 0, 0); }
 .risky,.disposable,.catch_all,.unknown,.no_mx, .smtp_check_failed, .error:not(.alert),.temporary{ background: #fcca0009; color: #e8a600; }
 
 
-/* Score style */
 .score {
   background: #f1f5f9;
   color: #0f172a;
@@ -951,7 +919,6 @@ tr:hover {
 .goodScore{
 
 }
-/* Table hover + empty message */
 .clickable-row {
   cursor: pointer;
   transition: background 0.3s ease;
@@ -971,7 +938,6 @@ tr:hover {
   font-size: 18px;
 }
 
-/* Button back */
 .btn.back {
   display: inline-block;
   background: var(--secondary-color);
@@ -1240,8 +1206,11 @@ display: none;
     .banner .intro p {
       display: none;
     }
-    .form-group.tv label,.how-validate-items .step,.how-validate-items .step-name,.accurate-items p,.elem-desc .name,.faq-question span{
+    .form-group.tv label,.how-validate-items .step,.accurate-items p,.elem-desc .name,.faq-question span{
       font-size: 12px;
+    }
+    .how-validate-items .step-name{
+      font-size: 10px;
     }
     .accurate-items p{
       line-height: 20px;
@@ -1270,7 +1239,7 @@ display: none;
       font-size: 12px;
     }
     .how-validate-items{
-      padding: 10px 15px
+      padding: 10px 10px
     }
     .testimonial-item {
            
@@ -1313,13 +1282,91 @@ display: none;
       height: 100px;
       border-radius: 5px;
     }
+    .nav-menu ul {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .menu-toggle {
+      display: flex;
+    }
+  
+    .nav-menu {
+      position: fixed;
+      height: 100vh;
+      width: 70%;
+      top: 70px;
+      right: -100%;
+      background: #fff;
+      padding: 20px 30px;
+      box-shadow: -6px 0 20px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+  header ul{
+    justify-content: left;
+    align-items: start;
+
+  }
+  
+    .nav-menu.open {
+      right: 0;
+    }
+  
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav-menu ul{
+      position: relative;
+    }
+    .form-group.input-file{
+      text-align: center;
+        }
+        .uploadMessage{
+          text-align: center;
+        }
+      
 }
 
 @media screen and (max-width: 375px) {
   .how-validate-bl {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
   }
   .more-email-items{
     grid-template-columns: repeat(2,1fr);
+  }
+  .form-group.input-file label{
+    margin: 4px;
+  }
+  .banner .intro{
+    padding-top: 20px;
+  }
+  .newsletter-box input{
+    height: 100%;
+    font-size: 11px;
+  }
+  .newsletter-box button {
+    
+    padding: 11px 30px;
+   
+
+  }
+
+}
+@media screen and (max-width: 320px) {
+  .form-group.tv textarea {
+    padding: 7px 19px;
+    font-size: 13px;
+  }
+  .btn-bl #validateBtn {
+    gap: 7px;
+    padding: 15px 13px;
+    font-size: 11px;
   }
 }

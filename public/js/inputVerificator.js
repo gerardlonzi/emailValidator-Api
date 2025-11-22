@@ -88,5 +88,10 @@ const header = document.querySelector('header');
       header.classList.remove('scrolled');
     }
   });
-
-
+  const menuBtn = document.getElementById("menuToggle");
+  const navMenu = document.getElementById("navMenu");
+  
+  menuBtn.addEventListener("click", () => {
+    menuBtn.classList.toggle("open");
+    navMenu.classList.toggle("open");
+  });
